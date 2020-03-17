@@ -1,0 +1,359 @@
+<head>
+    {{!-- checkout page --}}
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/style_checkout.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+{{>header}}
+<div class="hero-wrap hero-bread" style="background-image: url('../images/bg_6.jpg'); margin-top: -38px;">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <h3 class="mb-0 cl3 ltext-103">{{__ "Choose one option for payment"}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!--  --}}
+
+<div class="row">
+    <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+        <div id="success" class="alert alert-success" {{#if noMessage}}hidden{{/if}}>
+            {{ successMsg }}
+        </div>
+    </div>
+</div>
+
+
+<!-- Tab01 -->
+<div class="tab01 mt-5">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item p-b-10">
+            <a class="nav-link active" data-toggle="tab" href="#offline" role="tab">
+                <h4>{{__ "Payment Offline"}}</h4>
+            </a>
+        </li>
+
+        <li class="nav-item p-b-10">
+            <a class="nav-link" data-toggle="tab" href="#online" role="tab">
+                <h4>{{__ "Payment Online"}}</h4>
+            </a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content p-t-43">
+        <!-- - -->
+        <div class="tab-pane fade show active" id="offline" role="tabpanel">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-10 ftco-animate">
+                        <form action="/order/add-order" method="POST" class="billing-form">
+                            <h3 class="mb-4 billing-heading">{{__ "Billing Details"}}</h3>
+                            {{#infoUser}}
+                            <div class="row align-items-end">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>{{__ "Full Name"}} ({{__ "Mr/Mrs"}}):</label>
+                                        <h4>{{this.fullName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="country">{{__ "Country"}}</label>
+                                        <div class="select-wrap">
+                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                            <select name="country" id="country" class="form-control" required>
+                                                <option value="France">France</option>
+                                                <option value="Italy">Italy</option>
+                                                <option value="Philippines">Philippines</option>
+                                                <option value="South">South Korea</option>
+                                                <option value="United">United States</option>
+                                                <option value="Japan">Japan</option>
+                                                <option value="Viet-Nam">Viet Nam</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="streetaddress">Street Address</label>
+                                        <input id="address" name="address" type="text" class="form-control"
+                                            placeholder="House number and street name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input id="district" name="district" type="text" class="form-control"
+                                            placeholder="District" required>
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="towncity">Town / City</label>
+                                        <input id="city" name="city" type="text" class="form-control" placeholder=""
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="postcodezip">Postcode / ZIP *</label>
+                                        <input type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone">Phone Number:</label>
+                                        <h4>{{this.phoneNum}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="emailaddress">Email Address</label>
+                                        <h4>{{this.email}}</h4>
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                            </div>
+                            {{/infoUser}}
+                            <div class="container">
+                                <div class="row mt-5 pt-3 d-flex">
+                                    {{#if products}}
+                                    <div class="col-md-6">
+                                        <div class="cart-detail bg-light p-3 p-md-4">
+                                            <h3 class="billing-heading mb-4">{{__ "Information cart"}}</h3>
+                                            <div class="row" style="padding-bottom: 15px">
+                                                <div class="col-3" style="padding-left:25px">{{__ "Product"}}</div>
+                                                <div class="col-3">{{__ "Size"}}</div>
+                                                <div class="col-3">{{__ "Quantity"}}</div>
+                                                <div class="col-3">{{__ "Total"}} ($)</div>
+                                            </div>
+                                            {{#each products}}
+                                            <div class="form-group">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-3">
+                                                            {{this.item.title}}
+                                                        </div>
+                                                        <div class="col-3">
+                                                            {{this.size}}
+                                                        </div>
+                                                        <div class="col-3">
+                                                            {{this.qty}}
+                                                        </div>
+                                                        <div class="col-3">
+                                                            ${{this.price}}.00
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{/each}}
+
+                                        </div>
+                                    </div>
+                                    {{/if}}
+
+                                    <div class="col-md-6 d-flex">
+                                        <div class="cart-detail cart-total bg-light p-3 p-md-4">
+                                            <h3 class="billing-heading mb-4">{{__ "Cart Total"}}</h3>
+                                            <p class="d-flex">
+                                                <span>{{__ "Subtotal"}}</span>
+                                                <span>${{total}}.00</span>
+                                            </p>
+                                            <p class="d-flex">
+                                                <span>{{__ "Discount"}}</span>
+                                                <span> {{discount}}</span>
+                                            </p>
+                                            <hr>
+                                            <p class="d-flex total-price">
+                                                <span>{{__ "Total"}}</span>
+                                                {{#if totalDiscount}}
+                                                <span>${{totalDiscount}}</span>
+                                                {{else}}
+                                                <span>${{total}}.00</span>
+                                                {{/if}}
+                                            </p>
+                                            <p><button type="submit"
+                                                    class="btn btn-primary py-3 px-4">{{__ "Place an order"}}</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div> <!-- .col-md-8 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- - -->
+        <div class="tab-pane fade" id="online" role="tabpanel">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-10 ftco-animate">
+                        <div id="charge-error" class="alert alert-danger {{#if noError}}hidden{{/if}}">
+                            {{errMsg}}
+                        </div>
+                        <form id="checkout-form" action="/order/add-order" method="POST" class="billing-form">
+                            <h3 class="mb-4 billing-heading">{{__ "Billing Details"}}</h3>
+                            {{#infoUser}}
+                            <div class="row align-items-end">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>{{__ "Full Name"}} ({{__ "Mr/Mrs"}}):</label>
+                                        <h4>{{this.fullName}}</h4>
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="emailaddress">{{__ "Email Address"}}:</label>
+                                        <input id="email-address" name="emailaddress" type="text" class="form-control"
+                                            placeholder="{{this.email}}">
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="towncity">{{__ "Card Holder Name"}} *:</label>
+                                        <input id="card-name" name="card-name" type="text" class="form-control"
+                                            placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="creaditcard">{{__ "Credit Card Number"}} *:</label>
+                                        <input id="card-number" name = "card_name" type="number" class="form-control" placeholder=""
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="expirationmonth">{{__ "Expiration Month"}} *:</label>
+                                        <input id="card-expiry-month" type="text" class="form-control" placeholder=""
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="expirationyear">{{__ "Expiration Year"}} *:</label>
+                                        <input id="card-expiry-year" type="text" class="form-control" placeholder=""
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="w-100"></div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="country">{{__ "CVC"}} *:</label>
+                                        <input id="card-cvc" type="number" class="form-control" placeholder="" required>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/infoUser}}
+                            <div class="container">
+                            <div class="row mt-5 pt-3 d-flex">
+                                {{#if products}}
+                                <div class="col-md-6">
+                                    <div class="cart-detail bg-light p-3 p-md-4">
+                                        <h3 class="billing-heading mb-4">{{__ "Information cart"}}</h3>
+                                        <div class="row" style="padding-bottom: 15px">
+                                            <div class="col-3" style="padding-left:25px">{{__ "Product"}}</div>
+                                            <div class="col-3">{{__ "Size"}}</div>
+                                            <div class="col-3">{{__ "Quantity"}}</div>
+                                            <div class="col-3">{{__ "Total"}} ($)</div>
+                                        </div>
+                                        {{#each products}}
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        {{this.item.title}}
+                                                    </div>
+                                                    <div class="col-3">
+                                                        {{this.size}}
+                                                    </div>
+                                                    <div class="col-3">
+                                                        {{this.qty}}
+                                                    </div>
+                                                    <div class="col-3">
+                                                        ${{this.price}}.00
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+
+                                    </div>
+                                </div>
+                                {{/if}}
+
+                                <div class="col-md-6 d-flex">
+                                    <div class="cart-detail cart-total bg-light p-3 p-md-4">
+                                        <h3 class="billing-heading mb-4">{{__ "Cart Total"}}</h3>
+                                        <p class="d-flex">
+                                            <span>{{__ "Subtotal"}}</span>
+                                            <span>${{total}}.00</span>
+                                        </p>
+                                        <p class="d-flex">
+                                            <span>{{__ "Discount"}}</span>
+                                            <span> {{discount}}</span>
+                                        </p>
+                                        <hr>
+                                        <p class="d-flex total-price">
+                                            <span>{{__ "Total"}}</span>
+                                            {{#if totalDiscount}}
+                                            <span>${{totalDiscount}}</span>
+                                            {{else}}
+                                            <span>${{total}}.00</span>
+                                            {{/if}}
+                                        </p>
+                                        <p><button type="submit" id="payOnline"
+                                                class="btn btn-primary py-3 px-4">{{__ "Payment Online"}}</button></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div> <!-- .col-md-8 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+            stroke="#F96D00" /></svg></div>
+
+<script src="/javascripts/jquery.min.js"></script>
+<script src="/javascripts/jquery-migrate-3.0.1.min.js"></script>
+<script src="/javascripts/jquery.waypoints.min.js"></script>
+<script src="/javascripts/jquery.stellar.min.js"></script>
+<script src="/javascripts/owl.carousel.min.js"></script>
+<script src="/javascripts/jquery.magnific-popup.min.js"></script>
+<script src="/javascripts/aos.js"></script>
+<script src="/javascripts/scrollax.min.js"></script>
+<script src="/javascripts/main_checkout.js"></script>
+
+
+
+
+{{>footer}}
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="/javascripts/checkout.js"></script>
