@@ -15,7 +15,7 @@ var schema = new Schema({
   hotel: { type: String, required: true },
   description: { type: String, required: true },
   checkLocate: { type: Boolean, require: true },
-  schedule: {type: Object, required:true},
+  schedule: [],
   reviews: [],
   orderList: [],
   productRate: { type: Number },

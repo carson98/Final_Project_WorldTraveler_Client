@@ -97,6 +97,7 @@ router.get("/detail/:id", (req, res, next) => {
   var productId = req.params.id;
   var userAcc = req.session.user;
   var checkReview = null;
+  var schedule = [];
   var product = Product.findById(productId, async (err, pro) => {
     if (err) {
       return res.redirect("/");
@@ -111,7 +112,6 @@ router.get("/detail/:id", (req, res, next) => {
         }
       }
     }
-
     Product.find(
       {
         userGroup: pro.userGroup
@@ -128,6 +128,7 @@ router.get("/detail/:id", (req, res, next) => {
           checkAcc: checkReview,
           reviewLength: pro.reviews.length
         });
+        
       }
     );
   });
