@@ -1,28 +1,36 @@
-var express = require("express");
-var router = express.Router();
-var Product = require("../models/product");
-var paginate = require("../config/paginate");
+var express = require ('express');
+var router = express.Router ();
+var Product = require ('../models/product');
+var paginate = require ('../config/paginate');
 var sizes = 6;
 
 /* GET home page. */
-router.post("/product-searchTour", (req, res) => {
+router.post ('/product-searchTour', (req, res) => {
   sizes = sizes + 3;
-  console.log(req.body.dates)
-  console.log(req.body.from)
-  console.log(req.body.to)
-  Product.find(
+  console.log (req.body.dates);
+  console.log (req.body.from);
+  console.log (req.body.to);
+  Product.find (
     {
-      "destination.id": req.body.to,
-      "depart.id": req.body.from
+      'destination.id': req.body.to,
+      'depart.id': req.body.from,
     },
     (err, results) => {
-      results.filter(s => {
-        console.log(s.date.toISOString().slice(0,10))
-        s.date.toISOString().slice(0, 10) === req.body.dates && s
-      }) 
-      // console.log(test)
-      var docs = results;
       console.log(results);
+      results.filter (s => {
+        console.log (s.date.toISOString ().slice (0, 10));
+        s.date.toISOString ().slice (0, 10) === req.body.dates && s;
+      });
+      if (req.body.price === '200') {
+        var docs = results.filter (s => s.price < 200);
+      } else if (req.body.price === '500') {
+        var docs = results.filter (s => s.price > 500);
+      } else if (req.body.price === '200-500') {
+        var docs = results.filter (s => s.price >= 200 && s.price <= 500);
+      } else if (req.body.price === 'all') {
+        var docs = results;
+      }
+      console.log(docs)
       var productChunks = [];
       if (sizes > docs.length) {
         sizes = docs.length;
@@ -30,25 +38,25 @@ router.post("/product-searchTour", (req, res) => {
       }
       var chuckSize = 3;
       for (var i = 0; i < docs.length; i += chuckSize) {
-        productChunks.push(docs.slice(i, i + chuckSize));
+        productChunks.push (docs.slice (i, i + chuckSize));
       }
-      res.render("product/productList", {
+      res.render ('product/productList', {
         products: productChunks,
-        hidenMore: hidenMore
+        hidenMore: hidenMore,
       });
     }
   );
 });
 
-router.get("/product-more", async (req, res) => {
-  sizes = await (sizes + 3);
-  await Product.paginate(
+router.get ('/product-more', async (req, res) => {
+  sizes = await sizes + 3;
+  await Product.paginate (
     {},
     {
       page: 1,
-      limit: sizes
+      limit: sizes,
     },
-    async function(err, rs) {
+    async function (err, rs) {
       var docs = rs.docs;
       var productChunks = [];
       if (sizes > docs.length) {
@@ -57,47 +65,47 @@ router.get("/product-more", async (req, res) => {
       }
       var chuckSize = 3;
       for (var i = 0; i < docs.length; i += chuckSize) {
-        productChunks.push(docs.slice(i, i + chuckSize));
+        productChunks.push (docs.slice (i, i + chuckSize));
       }
-      await res.render("product/productList", {
+      await res.render ('product/productList', {
         products: productChunks,
-        hidenMore: hidenMore
+        hidenMore: hidenMore,
       });
     }
   );
 });
 
-router.post("/product-search", async (req, res) => {
-  Product.find(
+router.post ('/product-search', async (req, res) => {
+  Product.find (
     {
       title: {
         $regex: req.body.search,
-        $options: "i"
-      }
+        $options: 'i',
+      },
     },
     (err, docs) => {
       var productChunks = [];
       var chunkSize = docs.length;
       for (var i = 0; i < docs.length; i += chunkSize) {
-        productChunks.push(docs.slice(i, i + chunkSize));
+        productChunks.push (docs.slice (i, i + chunkSize));
       }
-      res.render("product/productList", {
-        products: productChunks
+      res.render ('product/productList', {
+        products: productChunks,
       });
     }
   );
 });
 
-router.post("/filterPrice", (req, res) => {});
+router.post ('/filterPrice', (req, res) => {});
 
-router.get("/detail/:id", (req, res, next) => {
+router.get ('/detail/:id', (req, res, next) => {
   var productId = req.params.id;
   var userAcc = req.session.user;
   var checkReview = null;
   var schedule = [];
-  var product = Product.findById(productId, async (err, pro) => {
+  var product = Product.findById (productId, async (err, pro) => {
     if (err) {
-      return res.redirect("/");
+      return res.redirect ('/');
     }
     if (userAcc && pro.orderList.length > 0) {
       for (var i = 0; i < pro.orderList.length; i++) {
@@ -109,31 +117,30 @@ router.get("/detail/:id", (req, res, next) => {
         }
       }
     }
-    Product.find(
+    Product.find (
       {
-        userGroup: pro.userGroup
+        userGroup: pro.userGroup,
       },
       async (err, docs) => {
         for (var i = 0; i < docs.length; i++) {
-          if (String(docs[i]._id) == productId) {
-            await docs.splice(i, 1);
+          if (String (docs[i]._id) == productId) {
+            await docs.splice (i, 1);
           }
         }
-        await res.render("product/detail", {
+        await res.render ('product/detail', {
           proDetail: pro,
           proRelated: docs,
           checkAcc: checkReview,
-          reviewLength: pro.reviews.length
+          reviewLength: pro.reviews.length,
         });
-        
       }
     );
   });
 });
 
-router.post("/review-product/:id", async (req, res) => {
+router.post ('/review-product/:id', async (req, res) => {
   var id = req.params.id;
-  var rating = Number(req.body.rating);
+  var rating = Number (req.body.rating);
   var userEmail = req.session.user.email;
   var userName = req.session.user.fullName;
   var description = req.body.review;
@@ -143,28 +150,28 @@ router.post("/review-product/:id", async (req, res) => {
     userName: userName,
     rating: rating,
     description: description,
-    date_time: new Date().toISOString().slice(0, 10)
+    date_time: new Date ().toISOString ().slice (0, 10),
   };
   var updPro;
-  await Product.findById(id, async (err, doc) => {
+  await Product.findById (id, async (err, doc) => {
     for (var i = 0; i < doc.reviews.length; i++) {
       if (doc.reviews[i].userEmail == userEmail) {
         // find userEmail exist
-        updPro = await Product.findOneAndUpdate(
+        updPro = await Product.findOneAndUpdate (
           {
-            "reviews.userEmail": userEmail
+            'reviews.userEmail': userEmail,
           },
           {
             $set: {
-              "reviews.$.userName": userName,
-              "reviews.$.rating": rating,
-              "reviews.$.description": description,
-              "reviews.$.date_time": new Date().toISOString().slice(0, 10)
-            }
+              'reviews.$.userName': userName,
+              'reviews.$.rating': rating,
+              'reviews.$.description': description,
+              'reviews.$.date_time': new Date ().toISOString ().slice (0, 10),
+            },
           },
           {
             upsert: true,
-            new: true
+            new: true,
           },
           async (err, docs) => {}
         );
@@ -172,49 +179,49 @@ router.post("/review-product/:id", async (req, res) => {
     }
   });
   if (updPro == undefined) {
-    await Product.findOneAndUpdate(
+    await Product.findOneAndUpdate (
       {
-        _id: id
+        _id: id,
       },
       {
         $addToSet: {
-          reviews: objReview
-        }
+          reviews: objReview,
+        },
       },
       {
-        new: true
+        new: true,
       },
       async (err, doc) => {}
     );
   }
-  await Product.findById(id, async (err, doc) => {
+  await Product.findById (id, async (err, doc) => {
     var sum = 0;
     var count = 0;
     if (doc.reviews.length == 0) {
       count = 1;
     }
     for (var i = 0; i < doc.reviews.length; i++) {
-      sum = await (sum + doc.reviews[i].rating);
+      sum = await sum + doc.reviews[i].rating;
       await count++;
     }
-    productRate = await (sum / count).toFixed(1);
-    await Product.findOneAndUpdate(
+    productRate = await (sum / count).toFixed (1);
+    await Product.findOneAndUpdate (
       {
-        _id: id
+        _id: id,
       },
       {
         $set: {
-          productRate: productRate
-        }
+          productRate: productRate,
+        },
       },
       {
         upsert: true,
-        new: true
+        new: true,
       },
-      function(err, doc) {}
+      function (err, doc) {}
     );
   });
-  res.redirect("../detail/" + id);
+  res.redirect ('../detail/' + id);
 });
 
 module.exports = router;
