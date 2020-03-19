@@ -25,7 +25,6 @@ router.get("/", async function(req, res, next) {
           if (s.checkLocate === true) {
             var obj = departFrom.find(a => a.id === s.depart.id);
             var obj2 = desDomestic.find(b => b.id === s.destination.id);
-            var obj3 = desInternational.find(c => c.id === s.destination.id);
 
             if (obj === undefined) {
               departFrom.push(s.depart);
@@ -34,6 +33,7 @@ router.get("/", async function(req, res, next) {
               desDomestic.push(s.destination);
             }
           } else {
+            var obj3 = desInternational.find(c => c.id === s.destination.id);
             if(obj3 === undefined){
               desInternational.push(s.destination);
             }
