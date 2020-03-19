@@ -1,9 +1,20 @@
 function printPDF() {
-  const filename = "Tour-Schedule.pdf";
 
-  html2canvas(document.querySelector("#tour-schedule")).then(canvas => {
-    let pdf = new jsPDF("p", "mm", "a4");
-    pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, 211, 298);
-    pdf.save(filename);
-  });
+  var schedule = document.getElementById('tour-schedule');
+
+  var newWin = window.open("", "Print-Window");
+
+  newWin.document.open();
+
+  newWin.document.write(
+    '<html><body onload="window.print()">' +
+    schedule.innerHTML +
+      "</body></html>"
+  );
+
+  newWin.document.close();
+
+  setTimeout(function() {
+    newWin.close();
+  }, 10);
 }

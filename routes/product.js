@@ -12,11 +12,8 @@ router.post("/product-searchTour", (req, res) => {
   console.log(req.body.to)
   Product.find(
     {
-      _id: req.body.to,
-      "depart.name": {
-        $regex: req.body.from,
-        $options: "i"
-      },
+      "destination.id": req.body.to,
+      "depart.id": req.body.from
     },
     (err, results) => {
       results.filter(s => {

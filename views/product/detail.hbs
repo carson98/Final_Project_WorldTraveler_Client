@@ -187,24 +187,22 @@
                                 <div id="tour-schedule">
                                     {{# each this.schedule}}
                                     <div class="col-md-12">
-                                        <div class="day-wrap mb-3">
+                                        <div class="mb-3">
                                             <h3>Day {{this.day}}: {{this.title}}</h3>
-                                            <p class="pt-2">
+                                            <p class="pt-2" style="word-wrap: break-word;">
                                                 {{this.content}}
                                             </p>
-                                            <img src="../../images/{{this.img}}"
-                                                style="width: 100%; vertical-align: middle;"/>
+                                            <img class="mt-1" src="../../images/{{this.img}}" style="width: auto; height: auto; 
+                                            margin-left: auto; margin-right: auto; display: block" />
                                         </div>
-
                                     </div>
                                     {{/each}}
                                 </div>
 
-                                <div id="tour"></div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 text-center">
                                     <p>
                                         <button onclick="printPDF()" class="btn bg1 bor1 cl0 py-3 px-4">
-                                            Print to PDF
+                                            <i class="zmdi zmdi-print"></i> Print this tour
                                         </button>
                                     </p>
                                 </div>
@@ -240,8 +238,8 @@
                                                 <td class="d-flex">
                                                     <ul>
                                                         <li>Tour Guide: {{this.tourGuide}}</li>
-                                                        <li>Hotel: {{this.hotel}}</li>
-                                                        <li>Destination: {{this.description}}</li>
+                                                        <li>Hotel: {{this.hotel}} Star</li>
+                                                        <li>Tour Description: {{this.description}}</li>
                                                     </ul>
                                                 </td>
                                                 <td />
