@@ -1584,7 +1584,8 @@ button.mfp-close {
   color: #333;
   border-color: #797979;
 }
-.fa-user, .zmdi-shopping-cart {
+.fa-user,
+.zmdi-shopping-cart {
   color: #fff !important;
 }
 
@@ -2034,8 +2035,8 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .block2-txt {
-background: whitesmoke;
-padding: 15px 10px 15px 10px;
+  background: whitesmoke;
+  padding: 15px 10px 15px 10px;
 }
 
 .btn-addwish-b2 .icon-heart2 {
@@ -2415,7 +2416,6 @@ padding: 15px 10px 15px 10px;
 /* ------------------------------------------------------------------- */
 .day-wrap {
   border-bottom: 1px dashed #ccc;
-
 }
 
 /*==================================================================
@@ -3022,7 +3022,6 @@ padding: 15px 10px 15px 10px;
   width: 100%;
 }
 
-
 /*---------------------------------------------*/
 .how-bor2,
 .how-bor1 {
@@ -3530,4 +3529,13 @@ padding: 15px 10px 15px 10px;
 .title-descript {
   font-size: 17px;
   color: #555;
+}
+
+/* Detail Page */
+.mb-3 {
+  width: 100%;
+}
+.mb-3 img {
+  width: 100%;
+  margin-top: 20px;
 }

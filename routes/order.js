@@ -250,7 +250,7 @@ router.post("/add-order", async function(req, res, next) {
     `<h3>Total:$ ${cart.totalDiscount}.00</h3>`;
   // end send information to mail
 
-  // await sendMail(output, "Customer Order", user.email);
+  await sendMail(output, "Customer Order", user.email);
   req.session.cart = null; // set session cart null
   await res.render("contact/notification"); // render page
 });

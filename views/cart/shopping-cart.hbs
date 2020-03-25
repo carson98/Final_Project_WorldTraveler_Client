@@ -50,20 +50,9 @@
 								</td>
 								<td class="column-3">$ {{this.price}}</td>
 								<td class="column-3" style="padding-bottom:30px">
-									<div class="dropdown">
-										<button type="button" class="btn btn-danger dropdown-toggle"
-											data-toggle="dropdown">
+										<a type="button" class="btn btn-danger" href="/cart/removeAll/{{this.item._id}}">
 											<i class="fa fa-trash" aria-hidden="true"></i>
-										</button>
-										<div class="dropdown-menu">
-											<a class="dropdown-item"
-												href="/cart/reduceByOne/{{this.item._id}}">{{__ "Reduce
-												by 1"}}</a>
-											<a class="dropdown-item"
-												href="/cart/removeAll/{{this.item._id}}">{{__ "Remove
-												all"}}</a>
-										</div>
-									</div>
+										</a>
 								</td>
 
 							</tr>
@@ -102,21 +91,6 @@
 					<h4 class="mtext-109 cl2 p-b-30">
 						{{__ "Cart Totals"}}
 					</h4>
-
-					<div class="flex-w flex-t bor12 p-b-13 form-group">
-						<div class="size-208">
-							<span class="stext-110 cl2">
-								{{__ "Tour Price"}}:
-							</span>
-						</div>
-
-						<div class="size-209">
-							<span class="mtext-110 cl2">
-								$ {{this.totalPrice}}
-							</span>
-						</div>
-
-					</div>
 					<div class="flex-w flex-t bor12 p-b-13 form-group">
 						<div class="size-208">
 							<span class="stext-110 cl2">
@@ -126,7 +100,7 @@
 
 						<div class="size-209">
 							<span class="mtext-110 cl2">
-								$ {{this.storedItem.numChil}} (30% off)
+								$ {{this.priceChil}} (30% off)
 							</span>
 						</div>
 
@@ -140,7 +114,7 @@
 
 						<div class="size-209">
 							<span class="mtext-110 cl2">
-								$ {{this.storedItem.numKid}} (50% off)
+								$ {{this.priceKid}} (50% off)
 							</span>
 						</div>
 
@@ -155,7 +129,7 @@
 
 						<div class="size-209">
 							<span class="mtext-110 cl2">
-								{{couponCodes.description}}
+								{{couponCodes._doc.description}}
 							</span>
 						</div>
 					</div>

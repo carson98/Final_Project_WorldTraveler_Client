@@ -10,12 +10,12 @@
                             <p class="card-category">{{__ "Complete your profile"}}</p>
                         </div>
                         <div class="card-body">
-                            <form action="/user/update/{{users.email}}" method="post">
+                            <form action="/user/update/{{users._doc.email}}" method="post">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Username (Email)</label>
-                                            <input type="text" class="form-control" value="{{users.email}}" name="email"
+                                            <input type="text" class="form-control" value="{{users._doc.email}}" name="email"
                                                 id="email" placeholder="" disabled>
                                         </div>
                                     </div>
@@ -24,7 +24,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Full Name</label>
-                                            <input value="{{users.fullName}}" type="text" id="fullName" name="fullName"
+                                            <input value="{{users._doc.fullName}}" type="text" id="fullName" name="fullName"
                                                 class="form-control">
                                         </div>
                                     </div>
@@ -32,7 +32,7 @@
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Birthday</label>
 
-                                            <input value="{{birthday}}" type="date" id="birthday" name="birthday"
+                                            <input value="{{users._doc.birthday}}" type="date" id="birthday" name="birthday"
                                                 class="form-control">
 
                                         </div>
@@ -43,14 +43,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Company</label>
-                                            <input value="{{users.company}}" type="text" id="company" name="company"
+                                            <input value="{{users._doc.company}}" type="text" id="company" name="company"
                                                 class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Phone Number</label>
-                                            <input value="{{users.phoneNum}}" type="number" id="phoneNum"
+                                            <input value="{{users._doc.phoneNum}}" type="number" id="phoneNum"
                                                 name="phoneNum" class="form-control">
                                         </div>
                                     </div>
@@ -60,7 +60,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="bmd-label-floating">Adress</label>
-                                            <input value="{{users.address}}" type="text" id="address" name="address"
+                                            <input value="{{users._doc.address}}" type="text" id="address" name="address"
                                                 class="form-control">
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@
                                             <label>About Me</label>
                                             <div class="form-group">
                                                 <textarea id="description" name="description" class="form-control"
-                                                    rows="5">{{users.description}}</textarea>
+                                                    rows="5">{{users._doc.description}}</textarea>
                                             </div>
                                         </div>
                                     </div>

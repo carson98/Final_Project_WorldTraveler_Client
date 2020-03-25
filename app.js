@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var session = require('express-session')
 var passport = require('passport');
 var flash = require('connect-flash');
+var flashexpress = require('flash-express');
 var validator = require('express-validator');
 var bodyParser = require('body-parser')
 var productRouter = require('./routes/product')
@@ -55,6 +56,7 @@ app.use(session({
   saveUninitialized: false
 }))
 app.use(flash());
+app.use(flashexpress());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));

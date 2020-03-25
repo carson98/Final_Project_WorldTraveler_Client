@@ -4,6 +4,9 @@ var Product = require("../models/product");
 var paginate = require("../config/paginate");
 var check_fields = require("../config/checkAuthenticate");
 /* GET home page. */
+// const humanizeDuration = require("humanize-duration");
+// const humanzize = (time, lan) =>
+//   humanizeDuration(time, { largest: 2, language: lan });
 
 router.get("/", async function(req, res, next) {
   // top 6 product rating star
@@ -18,11 +21,11 @@ router.get("/", async function(req, res, next) {
       var desInternational = [];
       var desDomestic = [];
       var chunkSize = 3;
-      var tour = rs.filter(s => s.seat !== 0);
+      var tour = rs.filter(s => s.seat > 0);
       for (var i = 0; i < tour.length; i += chunkSize) {
         productChunks.push(tour.slice(i, i + chunkSize));
         tour.forEach(s => {
-          if (s.checkLocate === true) {
+          if (s.category === true) {
             var obj = departFrom.find(a => a.id === s.depart.id);
             var obj2 = desDomestic.find(b => b.id === s.destination.id);
 
@@ -34,13 +37,13 @@ router.get("/", async function(req, res, next) {
             }
           } else {
             var obj3 = desInternational.find(c => c.id === s.destination.id);
-            if(obj3 === undefined){
+            if (obj3 === undefined) {
               desInternational.push(s.destination);
             }
-   
           }
         });
       }
+      console.log(productChunks)
       await res.render("pages/index", {
         departFrom: departFrom,
         desInternational: desInternational,

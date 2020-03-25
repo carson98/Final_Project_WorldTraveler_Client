@@ -3,13 +3,14 @@ var router = express.Router();
 var Product = require("../models/product");
 var paginate = require("../config/paginate");
 var sizes = 6;
+var sanitizeHtml = require("sanitize-html");
 
 /* GET home page. */
 router.post("/product-searchTour", (req, res) => {
   sizes = sizes + 3;
-  console.log(req.body.dates)
-  console.log(req.body.from)
-  console.log(req.body.to)
+  console.log(req.body.dates);
+  console.log(req.body.from);
+  console.log(req.body.to);
   Product.find(
     {
       "destination.id": req.body.to,
@@ -17,12 +18,26 @@ router.post("/product-searchTour", (req, res) => {
     },
     (err, results) => {
       results.filter(s => {
-        console.log(s.date.toISOString().slice(0,10))
-        s.date.toISOString().slice(0, 10) === req.body.dates && s
-      }) 
+        console.log(s.date.toISOString().slice(0, 10));
+        s.date.toISOString().slice(0, 10) === req.body.dates && s;
+        console.log(s.date);
+        s.date = s.date.toISOString().slice(0, 10);
+      });
       // console.log(test)
       var docs = results;
       console.log(results);
+
+      if (req.body.price === "200") {
+        var docs = results.filter(s => s.price < 200);
+      } else if (req.body.price === "500") {
+        var docs = results.filter(s => s.price > 500);
+      } else if (req.body.price === "200-500") {
+        var docs = results.filter(s => s.price >= 200 && s.price <= 500);
+      } else if (req.body.price === "all") {
+        var docs = results;
+      }
+
+      console.log(docs);
       var productChunks = [];
       if (sizes > docs.length) {
         sizes = docs.length;
@@ -32,6 +47,7 @@ router.post("/product-searchTour", (req, res) => {
       for (var i = 0; i < docs.length; i += chuckSize) {
         productChunks.push(docs.slice(i, i + chuckSize));
       }
+      console.log(productChunks)
       res.render("product/productList", {
         products: productChunks,
         hidenMore: hidenMore
@@ -49,7 +65,17 @@ router.get("/product-more", async (req, res) => {
       limit: sizes
     },
     async function(err, rs) {
+     
       var docs = rs.docs;
+      var arr = [...rs.docs]
+      arr.forEach(s => {
+        var obj = {...s}
+        obj.date = s.date.toISOString().slice(0, 10);
+        console.log(s.date.toISOString().slice(0, 10))
+        console.log(obj);
+      });
+
+      // console.log(docs);
       var productChunks = [];
       if (sizes > docs.length) {
         sizes = docs.length;
@@ -94,8 +120,69 @@ router.get("/detail/:id", (req, res, next) => {
   var productId = req.params.id;
   var userAcc = req.session.user;
   var checkReview = null;
-  var schedule = [];
   var product = Product.findById(productId, async (err, pro) => {
+    var dirty = pro.description;
+    var clean = sanitizeHtml(dirty);
+    clean = sanitizeHtml(dirty, {
+      allowedTags: [
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "blockquote",
+        "p",
+        "a",
+        "ul",
+        "ol",
+        "nl",
+        "li",
+        "b",
+        "i",
+        "strong",
+        "em",
+        "strike",
+        "code",
+        "hr",
+        "br",
+        "div",
+        "table",
+        "thead",
+        "caption",
+        "tbody",
+        "tr",
+        "th",
+        "td",
+        "pre",
+        "iframe"
+      ],
+      disallowedTagsMode: "discard",
+      allowedAttributes: {
+        a: ["href", "name", "target"],
+        // We don't currently allow img itself by default, but this
+        // would make sense if we did. You could add srcset here,
+        // and if you do the URL is checked for safety
+        img: ["src"]
+      },
+      // Lots of these won't come up by default because we don't allow them
+      selfClosing: [
+        "img",
+        "br",
+        "hr",
+        "area",
+        "base",
+        "basefont",
+        "input",
+        "link",
+        "meta"
+      ],
+      // URL schemes we permit
+      allowedSchemes: ["http", "https", "ftp", "mailto"],
+      allowedSchemesByTag: {},
+      allowedSchemesAppliedToAttributes: ["href", "src", "cite"],
+      allowProtocolRelative: true
+    });
+    console.log(clean);
+
     if (err) {
       return res.redirect("/");
     }
@@ -111,7 +198,7 @@ router.get("/detail/:id", (req, res, next) => {
     }
     Product.find(
       {
-        userGroup: pro.userGroup
+        category: pro.category
       },
       async (err, docs) => {
         for (var i = 0; i < docs.length; i++) {
@@ -119,13 +206,13 @@ router.get("/detail/:id", (req, res, next) => {
             await docs.splice(i, 1);
           }
         }
+        console.log(docs)
         await res.render("product/detail", {
           proDetail: pro,
           proRelated: docs,
           checkAcc: checkReview,
           reviewLength: pro.reviews.length
         });
-        
       }
     );
   });

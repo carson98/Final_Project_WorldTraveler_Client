@@ -2,6 +2,8 @@ module.exports = function Cart(oldCart) {
     this.items = oldCart.items || {};
     this.totalQty = oldCart.totalQty || 0;
     this.totalPrice = oldCart.totalPrice || 0;
+    this.priceChil = oldCart.priceChil || 0;
+    this.priceKid = oldCart.priceKid || 0;
     this.coupons = oldCart.coupons || {
         description: 0
     };
@@ -25,10 +27,17 @@ module.exports = function Cart(oldCart) {
         storedItem.qty = parseInt(storedItem.qty) + parseInt(quantity);
         storedItem.totalNumber =  parseInt(storedItem.qty) + parseInt(storedItem.numChil) + parseInt(storedItem.numKid);
         storedItem.price = (parseInt(storedItem.item.price) * parseInt(storedItem.qty)) + (parseInt(storedItem.item.price) * storedItem.numChil * 0.7) + (parseInt(storedItem.item.price) * storedItem.numKid * 0.5);
+        storedItem.priceChil = (parseInt(storedItem.item.price) * storedItem.numChil * 0.7);
+        storedItem.priceKid = (parseInt(storedItem.item.price) * storedItem.numKid * 0.5);
+
         if(!storedItem){
             this.totalPrice =  this.totalPrice + storedItem.price
+            this.priceChil = this.priceChil + storedItem.priceChil
+            this.priceKid = this.priceKid + storedItem.priceKid
         }else{
             this.totalPrice =  this.totalPrice +  (parseInt(storedItem.item.price) * parseInt(quantity)) + (parseInt(storedItem.item.price) * numChil * 0.7) + (parseInt(storedItem.item.price) * numKid * 0.5);
+            this.priceChil = (parseInt(storedItem.item.price) * storedItem.numChil * 0.7)
+            this.priceKid = (parseInt(storedItem.item.price) * storedItem.numKid * 0.5);
         }
         
         // this.totalPrice += 100
@@ -43,19 +52,9 @@ module.exports = function Cart(oldCart) {
         return arr;
     }
     this.removeItem = function (id) {
-        //this.totalQty -= this.items[id].qty;
         this.totalQty--;
         this.totalPrice -= parseInt(this.items[id].price);
         delete this.items[id];
 
-    }
-    this.reduceByOne = function (id) {
-        this.items[id].qty--;
-        this.items[id].price -= this.items[id].item.price
-        this.totalPrice -= this.items[id].item.price
-        if (this.items[id].qty <= 0) {
-            this.totalQty--;
-            delete this.items[id]
-        }
     }
 }

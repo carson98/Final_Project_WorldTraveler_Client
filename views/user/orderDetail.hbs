@@ -15,7 +15,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Order Date:</label>
-                                        {{orderDetail.orderDate}}
+                                        {{orderDetail._doc.orderDate}}
                                     </div>
                                 </div>
                             </div>
@@ -24,27 +24,27 @@
                                     <label class="bmd-label-floating font-weight-bold">Product detail in order:</label>
                                 </div>
                             </div>
-                            {{#each orderDetail.orderList}}
+                            {{#each orderDetail._doc.orderList}}
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Product Name: {{this.proName}}</label>
+                                        <label class="bmd-label-floating">Product Name: {{this._doc.proName}}</label>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Size: {{this.Size}}</label>
+                                        <label class="bmd-label-floating">Size: {{this._doc.Size}}</label>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Quantity: {{this.totalQuantity}}</label>
+                                        <label class="bmd-label-floating">Quantity: {{this._doc.totalQuantity}}</label>
 
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Total price: ${{this.totalPrice}}</label>
+                                        <label class="bmd-label-floating">Total price: ${{this._doc.totalPrice}}</label>
 
                                     </div>
                                 </div>
@@ -54,14 +54,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Customer Name:</label>
-                                        {{orderDetail.userInfo.name}}
+                                        {{orderDetail._doc.userInfo.name}}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Email:</label>
 
-                                        {{orderDetail.userInfo.email}}
+                                        {{orderDetail._doc.userInfo.email}}
 
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Phone Number:</label>
 
-                                        {{orderDetail.userInfo.phoneNum}}
+                                        {{orderDetail._doc.userInfo.phoneNum}}
 
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Discount:
-                                            {{orderDetail.couponCode.description}}</label>
+                                            {{orderDetail._doc.couponCode.description}}</label>
 
                                     </div>
                                 </div>
@@ -89,8 +89,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Adress Shipping:</label>
-                                        {{orderDetail.userInfo.address}},{{orderDetail.userInfo.district}},
-                                        {{orderDetail.userInfo.city}},{{orderDetail.userInfo.country}}
+                                        {{orderDetail._doc.userInfo.address}},{{orderDetail._doc.userInfo.district}},
+                                        {{orderDetail._doc.userInfo.city}},{{orderDetail._doc.userInfo.country}}
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Status Shipping:</label>
-                                        {{orderDetail.statusShip}}
+                                        {{orderDetail._doc.statusShip}}
                                     </div>
                                 </div>
 
@@ -108,7 +108,7 @@
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Total Price: </label>
                                         <p class="class=bmd-label-floating font-weight-bold">
-                                            ${{orderDetail.totalPrice}}
+                                            ${{orderDetail._doc.totalPrice}}
                                         </p>
 
 
@@ -131,16 +131,10 @@
                                     <a name="" id="" class="btn btn-secondary pull-right" style="margin-right:10px;"
                                         href="/user/profile" role="button">Back to
                                         Profile</a>
-
                                 </div>
-
-
                             </div>
                         </div>
-
                     </div>
-
-
                 </div>
                 <div class="col-md-2"></div>
             </div>

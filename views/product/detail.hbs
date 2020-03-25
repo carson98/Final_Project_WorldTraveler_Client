@@ -24,6 +24,7 @@
 <!-- Product Detail -->
 <section class="sec-product-detail bg0 p-t-65 p-b-60">
     <div class="container">
+        {{{notices1}}}
         {{#proDetail}}
         <div class="row">
             <div class="col-md-6 col-lg-7 p-b-30">
@@ -33,12 +34,12 @@
                         <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                         <div class="slick3 gallery-lb">
-                            <div class="item-slick3" data-thumb="../../images/{{this.imagePath}}">
+                            <div class="item-slick3" data-thumb="../../images/{{this._doc.imagePath}}">
                                 <div class="wrap-pic-w pos-relative">
-                                    <img src="../../images/{{this.imagePath}}" alt="IMG-PRODUCT">
+                                    <img src="../../images/{{this._doc.imagePath}}" alt="IMG-PRODUCT">
 
                                     <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                        href="../../images/{{this.imagePath}}">
+                                        href="../../images/{{this._doc.imagePath}}">
                                         <i class="fa fa-expand"></i>
                                     </a>
                                 </div>
@@ -50,35 +51,38 @@
             <div class="col-md-6 col-lg-5 p-b-30">
                 <div class="p-r-50 p-t-5 p-lr-0-lg">
                     <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                        {{this.title}}
+                        {{this._doc.title}}
+
                     </h4>
+                    <hr>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <p class="stext-102 cl5 p-t-23"><i class="zmdi zmdi-flight-takeoff"></i>
-                                {{__ "Place of Departure"}}: <span class="mtext-106 cl2">{{this.depart.name}}</span>
+                                {{__ "Place of Departure"}}: <span
+                                    class="mtext-106 cl2">{{this._doc.depart.name}}</span>
                             </p>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <p class="stext-102 cl5 p-t-23"><i class="zmdi zmdi-airline-seat-recline-extra"></i>
-                                {{__ "Seat Available"}}: <span class="mtext-106 cl2">{{this.seat}}</span>
+                                {{__ "Seat Available"}}: <span class="mtext-106 cl2">{{this._doc.seat}}</span>
                             </p>
                             <p class="stext-102 cl5 p-t-23"><i class="zmdi zmdi-money-box"></i>
-                                {{__ "Price"}}: <span class="mtext-106 cl2">$ {{this.price}}</span>
+                                {{__ "Price"}}: <span class="mtext-106 cl2">$ {{this._doc.price}}</span>
                             </p>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                             <p class="stext-102 cl5 p-t-23"><i class="zmdi zmdi-calendar"></i>
-                                {{__ "Date"}}: <span id="dateFormat" class="mtext-106 cl2">{{this.date}}</span>
+                                {{__ "Date"}}: <span class="mtext-106 cl2">{{this._doc.date}}</span>
                             </p>
                             <p class="stext-102 cl5 p-t-23"><i class="zmdi zmdi-time"></i>
-                                {{__ "Duration"}}: <span class="mtext-106 cl2">{{this.duration}} days</span>
+                                {{__ "Duration"}}: <span class="mtext-106 cl2">{{this._doc.duration}} days</span>
                             </p>
                         </div>
                     </div>
                     <hr>
                     <!--  -->
                     <div class="p-t-20">
-                        <form action="/cart/add-to-cart/{{this._id}}" method="post">
+                        <form action="/cart/add-to-cart/{{this._doc._id}}" method="post">
                             <div class="flex-w flex-r-m p-b-10 form-group">
                                 <div class="size-203 respon6">
                                     {{{__ "Adult"}}}:
@@ -147,8 +151,9 @@
                                 <i class="zmdi zmdi-check"></i> {{__ "Book this tour"}}
                             </button>
                             {{!-- Free web call --}}
-                            <a href="https://webcall.me/duminhtat98@gmail.com"><button type="button"
-                                    class="cl0 size-101 btn-success bor1 hov-btn1 trans-04">
+                            <a
+                                onclick="window.open('https://webcall.me/duminhtat98@gmail.com', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');"><button
+                                    type="button" class="cl0 size-101 btn-success bor1 hov-btn1 trans-04">
                                     {{!-- data-toggle="modal" data-target="#exampleModalCenter"> --}}
                                     <i class="zmdi zmdi-phone"></i> {{__ "Free web call"}}
                                 </button></a>
@@ -161,6 +166,7 @@
                 </div>
             </div>
         </div>
+
         {{/proDetail}}
         <div class="bor10 m-t-50 p-t-43 p-b-40">
             <!-- Tab01 -->
@@ -185,18 +191,11 @@
                         <div class="container">
                             <div class="row">
                                 <div id="tour-schedule">
-                                    {{# each this.schedule}}
                                     <div class="col-md-12">
                                         <div class="mb-3">
-                                            <h3>Day {{this.day}}: {{this.title}}</h3>
-                                            <p class="pt-2" style="word-wrap: break-word;">
-                                                {{this.content}}
-                                            </p>
-                                            <img class="mt-1" src="../../images/{{this.img}}" style="width: auto; height: auto; 
-                                            margin-left: auto; margin-right: auto; display: block" />
+                                            {{{this._doc.description}}}
                                         </div>
                                     </div>
-                                    {{/each}}
                                 </div>
 
                                 <div class="col-md-12 text-center">
@@ -213,7 +212,7 @@
                                             <tr>
                                                 <th scope="row">Departure</th>
                                                 <td>
-                                                    <p>{{this.depart.name}}</p>
+                                                    <p>{{this._doc.depart.name}}</p>
                                                 </td>
                                                 <td />
                                             </tr>
@@ -221,7 +220,7 @@
                                                 <th scope="row">Departure Time</th>
                                                 <td>
                                                     <p>
-                                                        {{this.date}}
+                                                        {{this._doc.date}}
                                                     </p>
                                                 </td>
                                                 <td />
@@ -237,9 +236,8 @@
                                                 <th scope="row">Included</th>
                                                 <td class="d-flex">
                                                     <ul>
-                                                        <li>Tour Guide: {{this.tourGuide}}</li>
-                                                        <li>Hotel: {{this.hotel}} Star</li>
-                                                        <li>Tour Description: {{this.description}}</li>
+                                                        <li>Tour Guide: {{this._doc.tourGuide}}</li>
+                                                        <li>Hotel: {{this._doc.hotel}} Star</li>
                                                     </ul>
                                                 </td>
                                                 <td />
@@ -278,22 +276,22 @@
                                     {{#proDetail}}
                                     <div class="flex-w flex-t p-b-68">
                                         <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                                            <img src="../../images/{{this.imagePath}}" alt="AVATAR">
+                                            <img src="../../images/{{this._doc.imagePath}}" alt="AVATAR">
                                         </div>
                                         <div class="size-207">
                                             <div class="flex-w flex-sb-m p-b-17">
                                                 <span class="mtext-107 cl2 p-r-20">
-                                                    <h2>{{this.title}}</h2>
+                                                    <h2>{{this._doc.title}}</h2>
                                                 </span>
                                                 <span id="ratingStar" class="fs-18 cl11">
-                                                    <h2>{{this.productRate}} <i class="zmdi zmdi-star"></i></h2>
+                                                    <h2>{{this._doc.productRate}} <i class="zmdi zmdi-star"></i></h2>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
                                     </br>
                                     <!-- Review -->
-                                    {{#each this.reviews}}
+                                    {{#each this._doc.reviews}}
                                     <div class="flex-w flex-t p-b-68">
                                         <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
                                             <img src="../../images/avatar-01.jpg" alt="AVATAR">
@@ -302,21 +300,21 @@
                                         <div class="size-207">
                                             <div class="flex-w flex-sb-m p-b-17">
                                                 <span class="mtext-107 cl2 p-r-20">
-                                                    {{this.userName}}
+                                                    {{this._doc.userName}}
                                                     <p class="stext-102 cl6">
-                                                        {{this.date_time}}
+                                                        {{this._doc.date_time}}
                                                     </p>
 
                                                 </span>
 
                                                 <span id="ratingStar" class="fs-18 cl11">
-                                                    {{this.rating}}
+                                                    {{this._doc.rating}}
                                                     <i class="zmdi zmdi-star"></i>
                                                 </span>
                                             </div>
 
                                             <p class="stext-102 cl6">
-                                                {{this.description}}
+                                                {{this._doc.description}}
                                             </p>
                                         </div>
                                     </div>
@@ -324,7 +322,7 @@
                                     {{/proDetail}}
                                     <!-- Add review -->
                                     {{# if checkAcc}}
-                                    <form class="w-full" action="/product/review-product/{{proDetail._id}}"
+                                    <form class="w-full" action="/product/review-product/{{proDetail._doc._id}}"
                                         method="post">
                                         <h5 class="mtext-108 cl2 p-b-7">
                                             Add a review - {{msg}}
@@ -391,9 +389,9 @@
                     <!-- Block2 -->
                     <div class="block2">
                         <div class="block2-pic hov-img0">
-                            <img src="../../images/{{this.imagePath}}" alt="IMG-PRODUCT">
+                            <img src="../../images/{{this._doc.imagePath}}" alt="IMG-PRODUCT">
 
-                            <a href="/product/detail/{{this._id}}"
+                            <a href="/product/detail/{{this._doc._id}}"
                                 class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                 Quick View
                             </a>
@@ -401,12 +399,12 @@
 
                         <div class="block2-txt flex-w flex-t p-t-14">
                             <div class="block2-txt-child1 flex-col-l ">
-                                <a href="/product/detail/{{this._id}}"
+                                <a href="/product/detail/{{this._doc._id}}"
                                     class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                    {{this.title}}
+                                    {{this._doc.title}}
                                 </a>
                                 <span class="stext-105 cl1">
-                                    $ {{this.price}}
+                                    $ {{this._doc.price}}
                                 </span>
                             </div>
 
@@ -430,3 +428,13 @@
 
 {{>footer}}
 <script src="/javascripts/printPDF.js"></script>
+<script type="text/javascript" src="flash/flash-client.js"></script> 
+
+{{!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<script>
+    Swal.fire({
+        icon: 'warning',
+        title: `{{{ notice }}}`
+    })
+</script> --}}
