@@ -6,8 +6,8 @@ module.exports = async function sendMail(content, title, emailTo) {
       port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: 'nhatnguyen00198@gmail.com', // generated ethereal user
-        pass: 'nhatnguyen' // generated ethereal password
+        user: 'duminhtat98@gmail.com', // generated ethereal user
+        pass: 'tatminhdu98' // generated ethereal password
       },
       tls: {
         rejectUnauthorized: false

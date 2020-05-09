@@ -1,7 +1,7 @@
 {{>header}}
 
 	<!-- Title page -->
-	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('../images/bg-01.jpg');">
+	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('../images/bg_6.jpg'); margin-top: -38px;">
 		<h2 class="ltext-105 cl0 txt-center">
 			{{__ "Contact"}}
 		</h2>
@@ -32,7 +32,7 @@
 						</button>
 					</form>
 				</div>
-				{{#store}}
+				{{#company}}
 				<div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
 					<div class="flex-w w-full p-b-42">
 						<span class="fs-18 cl5 txt-center size-211">
@@ -45,7 +45,7 @@
 							</span>
 
 							<p class="stext-115 cl6 size-213 p-t-18">
-								{{this.address}}
+								{{this._doc.address}}
 							</p>
 						</div>
 					</div>
@@ -61,7 +61,7 @@
 							</span>
 
 							<p class="stext-115 cl1 size-213 p-t-18">
-								{{this.phoneNum}}
+								{{this._doc.phoneNum}}
 							</p>
 						</div>
 					</div>
@@ -77,12 +77,12 @@
 							</span>
 
 							<p class="stext-115 cl1 size-213 p-t-18">
-								{{this.email}}
+								{{this._doc.email}}
 							</p>
 						</div>
 					</div>
 				</div>
-				{{/store}}
+				{{/company}}
 			</div>
 		</div>
 	</section>	

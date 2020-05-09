@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Product = require('../models/product')
+var Tour = require('../models/tour')
 var User = require('../models/user')
 var csrf = require('csurf');
 var passport = require('passport')
@@ -40,7 +40,7 @@ router.post('/update/:email', (req, res) => {
     upsert: true,
     new: true
   }, async (err, doc) => {
-    await Product.updateMany({
+    await Tour.updateMany({
       'orderList.userInfo.email': doc.email
     }, {
       '$set': {
@@ -61,7 +61,7 @@ router.post('/viewDetail', checkAuthen.isLoggedIn, (req, res) => {
     'email': req.body.email,
     'role': 'Customer'
   }, async (err, user) => {
-    await Product.find(async (err, product) => {
+    await Tour.find(async (err, tour) => {
       var arrProduct = [],
         arr_proDelet = []
       var obj = {
@@ -72,14 +72,14 @@ router.post('/viewDetail', checkAuthen.isLoggedIn, (req, res) => {
           obj.totalPrice = s.totalPrice
           obj.orderDate = s.orderDate
           s.sub_order.forEach(x => {
-            product.forEach(pro => {
+            tour.forEach(pro => {
               if (x.proId == pro._id) {
                 x.orderNumber.forEach(o => {
                   pro.orderList.forEach(p => {
                     if (o == p.numberOrder) {
                       p.proName = pro.title
-                      arrProduct.push(p) // view product detail
-                      // setup delete product
+                      arrProduct.push(p) // view tour detail
+                      // setup delete tour
                       var proDelete = {
                         '_id': pro._id,
                         'numberOrder': p.numberOrder
@@ -107,7 +107,7 @@ router.post('/viewDetail', checkAuthen.isLoggedIn, (req, res) => {
 router.post('/deleteOrder', async (req, res) => {
   var arr_proDelet = JSON.parse(req.body.arrPro)
   arr_proDelet.forEach(pro => {
-    var updPro = Product.findOneAndUpdate({
+    var updPro = Tour.findOneAndUpdate({
       '_id': pro._id,
       'orderList.numberOrder': pro.numberOrder
     }, {
@@ -138,7 +138,7 @@ router.get('/profile', checkAuthen.isLoggedIn, function (req, res, next) {
     if (doc.birthday != null) {
       birthday = doc.birthday.toISOString().slice(0, 10)
     }
-    Product.find((err, pro) => {
+    Tour.find((err, pro) => {
       var orderList_user = []
       doc.orderList.forEach(s => {
         var check = true

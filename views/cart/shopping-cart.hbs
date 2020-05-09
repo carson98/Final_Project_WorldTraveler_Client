@@ -9,7 +9,7 @@
 		</a>
 
 		<span class="stext-109 cl4">
-			{{__ "Shoping Cart"}}
+			{{__ "Booking Cart"}}
 		</span>
 	</div>
 </div>
@@ -18,7 +18,7 @@
 <!-- Shoping Cart -->
 <form class="bg0 p-t-75 p-b-85">
 	<div class="container">
-		{{#if products}}
+		{{#if tours}}
 		<div class="row">
 			<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
 				<div class="m-l-25 m-r--38 m-lr-0-xl">
@@ -32,7 +32,7 @@
 								<th class="column-3">{{__ "Total"}}</th>
 								<th class="column-3">{{__ "Delete"}}</th>
 							</tr>
-							{{#each products}}
+							{{#each tours}}
 							<tr class="table_row">
 								<td class="column-2">
 									<div class="how-itemcart1">
@@ -78,9 +78,9 @@
 							</div>
 
 						</form>
-						<a href="/product/product-more"
+						<a href="/tour/tour-more"
 							class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-							{{__ "Continue shopping"}}
+							{{__ "Continue booking"}}
 						</a>
 					</div>
 				</div>
@@ -162,7 +162,7 @@
 		{{else}}
 		<div class="container-fluid text-center">
 			<h3 class="form-text text-muted text-center">
-				{{__ "No items in shopping cart."}}
+				{{__ "No items in booking cart."}}
 			</h3>
 		</div>
 

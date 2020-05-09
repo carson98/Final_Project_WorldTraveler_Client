@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var Store = require('../models/store')
+var Company = require('../models/company')
 var sendMail = require('../config/sendMail')
 
 
 router.get('/view', function (req, res) {
-    Store.find((err, docs) => {
+    Company.find((err, docs) => {
         res.render('contact/contact', {
-            store: docs
+            company: docs
         })
     })
 

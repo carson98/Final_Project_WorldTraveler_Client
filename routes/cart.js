@@ -1,26 +1,32 @@
 var express = require("express");
 var router = express.Router();
-var Product = require("../models/product");
+var Tour = require("../models/tour");
 var Cart = require("../models/cart");
 var Coupon = require("../models/coupon");
+
 /* GET home page. */
 
 router.post("/add-to-cart/:id", function(req, res, next) {
-  var productId = req.params.id;
+  var tourId = req.params.id;
   var qty = req.body.num;
   var numChil = req.body.numChil;
   var numKid = req.body.numKid;
   var totalSeat = Number(numChil) + Number(numKid) + Number(qty);
   var cart = new Cart(req.session.cart ? req.session.cart : {});
-  Product.findById(productId, function(err, product) {
+  Tour.findById(tourId, function(err, tour) {
     if (err) {
       return res.redirect("/");
     }
-    if (product.seat < totalSeat) {
-      res.flash("Invalid Username", "error");
-      return res.redirect(`../../product/detail/${productId}`);
+    req.session.checkSeats = totalSeat;
+    if (tour.seat < totalSeat) {
+      req.session.sessionFlash = {
+        type: "warning",
+        message:
+          "Not Enough Seat"
+      };
+      return res.redirect(`../../tour/detail/${tourId}`);
     }
-    cart.add(product, product.id, qty, numChil, numKid);
+    cart.add(tour, tour.id, qty, numChil, numKid);
     req.session.cart = cart;
     res.redirect("/cart/shopping-cart");
   });
@@ -29,10 +35,9 @@ router.post("/add-to-cart/:id", function(req, res, next) {
 router.get("/shopping-cart", function(req, res, next) {
   if (!req.session.cart) {
     return res.render("cart/shopping-cart", {
-      products: null
+      tours: null
     });
   }
-
   var cart = new Cart(req.session.cart);
   var couponId = req.query.couponCode;
   Coupon.findOne(
@@ -72,7 +77,7 @@ router.get("/shopping-cart", function(req, res, next) {
       console.log(cart);
       console.log(cart.generateArray());
       res.render("cart/shopping-cart", {
-        products: cart.generateArray(),
+        tours: cart.generateArray(),
         totalPrice: cart.totalPrice,
         priceChil: cart.priceChil,
         priceKid: cart.priceKid,
@@ -85,9 +90,9 @@ router.get("/shopping-cart", function(req, res, next) {
 });
 
 router.get("/removeAll/:id", function(req, res, next) {
-  var productId = req.params.id;
+  var tourId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {});
-  cart.removeItem(productId);
+  cart.removeItem(tourId);
   console.log(cart);
   req.session.cart = cart;
   res.redirect("/cart/shopping-cart");

@@ -1,119 +1,130 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {{>header}}
+
+
 <div class="container" style="padding-top:20px; padding-bottom:30px">
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header card-header-danger">
-                            <h4 class="card-title">{{__ "Your Profile"}}</h4>
-                            <p class="card-category">{{__ "Complete your profile"}}</p>
-                        </div>
-                        <div class="card-body">
-                            <form action="/user/update/{{users._doc.email}}" method="post">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Username (Email)</label>
-                                            <input type="text" class="form-control" value="{{users._doc.email}}" name="email"
-                                                id="email" placeholder="" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Full Name</label>
-                                            <input value="{{users._doc.fullName}}" type="text" id="fullName" name="fullName"
-                                                class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Birthday</label>
-
-                                            <input value="{{users._doc.birthday}}" type="date" id="birthday" name="birthday"
-                                                class="form-control">
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Company</label>
-                                            <input value="{{users._doc.company}}" type="text" id="company" name="company"
-                                                class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Phone Number</label>
-                                            <input value="{{users._doc.phoneNum}}" type="number" id="phoneNum"
-                                                name="phoneNum" class="form-control">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating">Adress</label>
-                                            <input value="{{users._doc.address}}" type="text" id="address" name="address"
-                                                class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>About Me</label>
-                                            <div class="form-group">
-                                                <textarea id="description" name="description" class="form-control"
-                                                    rows="5">{{users._doc.description}}</textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit" class="cl0 size-101 bg1 bor1 hov-btn1 trans-04 pull-right">Update Profile</button>
-                                <div class="clearfix"></div>
-                            </form>
-
-                        </div>
-                    </div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#userprofile">User Account</a></li>
+        <li><a data-toggle="tab" href="#orderlist">View Order</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="userprofile">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <h4 class="card-title">{{__ "Your Profile"}}</h4>
+                    <p class="card-category">{{__ "Complete your profile"}}</p>
                 </div>
-                <div class="col-md-4">
-                    <div class="card card-profile">
-                        <div class="card-body">
-                            <h4 class="card-title" style="padding-bottom: 10px">Order List</h4>
-                            <p class="card-description">
-                                {{#each orderList}}
-                                {{!-- {{this._id}} --}}
-                                <form action="/user/viewDetail" method="post">
-                                    <div class="row">
-                                        <div class="form-group col-3" style="padding-top:5px">
-                                            <label>Order date:</label>
-                                        </div>
-                                        <div class="form-group col-6 mt-1">
-                                            <input id="orderDate" name="orderDate" type="text" class="form-control"
-                                                value="{{this.orderDate}}" readonly="true">
-                                            <input id="numberOrder" name="numberOrder" type="text" class="form-control"
-                                                value="{{this.number}}" hidden="false">
-                                            <input id="email" name="email" type="text" class="form-control"
-                                                value="{{this.email}}" hidden="false">
-                                        </div>
-                                        <div class="form-group col-3">
-                                            <button type="submit" class="btn cl0 bg1 bor1 hov-btn1 pull-right">Detail</button>
-                                        </div>
-                                    </div>
-                                    {{!-- <input type="hidden" name="_csrf" value="{{csrfToken}}" /> --}}
-                                </form>
-                                {{/each}}
-                            </p>
+                <div class="card-body">
+                    <form action="/user/update/{{users._doc.email}}" method="post">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Username (Email):</label>
+                                    <input type="text" class="form-control" value="{{users._doc.email}}" name="email"
+                                        id="email" placeholder="" disabled>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Full Name:</label>
+                                    <input value="{{users._doc.fullName}}" type="text" id="fullName" name="fullName"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Birthday:</label>
+
+                                    <input value="{{users._doc.birthday}}" type="date" id="birthday" name="birthday"
+                                        class="form-control">
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Company:</label>
+                                    <input value="{{users._doc.company}}" type="text" id="company" name="company"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Phone Number:</label>
+                                    <input value="{{users._doc.phoneNum}}" type="number" id="phoneNum" name="phoneNum"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="bmd-label-floating">Address:</label>
+                                    <input value="{{users._doc.address}}" type="text" id="address" name="address"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>About Me:</label>
+                                    <div class="form-group">
+                                        <textarea id="description" name="description" class="form-control"
+                                            rows="5">{{users._doc.description}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="cl0 size-101 bg1 bor1 hov-btn1 trans-04 pull-right">Update
+                            Profile</button>
+                        <div class="clearfix"></div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        {{!--  --}}
+        <div class="tab-pane" id="orderlist">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <h4 class="card-title">{{__ "Order List"}}</h4>
+                    <p class="card-category">{{__ "View order that you has booked"}}</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">
+                        {{#each orderList}}
+                        <form action="/user/viewDetail" method="post">
+                            <div class="row">
+                                <div class="form-group col-md-4 mt-2">
+                                    <label class="bmd-label-floating">Order date:</label>
+                                </div>
+                                <div class="form-group col-md-4 mt-2">
+                                    <input id="orderDate" name="orderDate" type="text" class="form-control"
+                                        value="{{this.orderDate}}" readonly="true">
+                                    <input id="numberOrder" name="numberOrder" type="text" class="form-control"
+                                        value="{{this.number}}" hidden="false">
+                                    <input id="email" name="email" type="text" class="form-control"
+                                        value="{{this.email}}" hidden="false">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <button type="submit" class="btn cl0 bg1 bor1 hov-btn1 pull-right">Detail</button>
+                                </div>
+                            </div>
+                        </form>
+                        {{/each}}
+                    </p>
                 </div>
             </div>
         </div>

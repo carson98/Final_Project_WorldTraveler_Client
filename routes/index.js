@@ -1,29 +1,27 @@
 var express = require("express");
 var router = express.Router();
-var Product = require("../models/product");
+var Tour = require("../models/tour");
 var paginate = require("../config/paginate");
 var check_fields = require("../config/checkAuthenticate");
 /* GET home page. */
-// const humanizeDuration = require("humanize-duration");
-// const humanzize = (time, lan) =>
-//   humanizeDuration(time, { largest: 2, language: lan });
 
 router.get("/", async function(req, res, next) {
-  // top 6 product rating star
-  Product.find()
+  // top 6 tour rating star
+  Tour.find()
     .sort({
       totalProfit: -1
     })
     .limit(6)
     .exec(async (err, rs) => {
-      var productChunks = [];
+      var tourChunks = [];
       var departFrom = [];
       var desInternational = [];
       var desDomestic = [];
       var chunkSize = 3;
+
       var tour = rs.filter(s => s.seat > 0);
       for (var i = 0; i < tour.length; i += chunkSize) {
-        productChunks.push(tour.slice(i, i + chunkSize));
+        tourChunks.push(tour.slice(i, i + chunkSize));
         tour.forEach(s => {
           if (s.category === true) {
             var obj = departFrom.find(a => a.id === s.depart.id);
@@ -43,18 +41,18 @@ router.get("/", async function(req, res, next) {
           }
         });
       }
-      console.log(productChunks)
+      console.log(tourChunks)
       await res.render("pages/index", {
         departFrom: departFrom,
         desInternational: desInternational,
         desDomestic: desDomestic,
-        products: productChunks
+        tours: tourChunks
       });
     });
 });
 
-router.post("/product-search", async (req, res) => {
-  Product.find(
+router.post("/tour-search", async (req, res) => {
+  Tour.find(
     {
       title: {
         $regex: req.body.search,
@@ -62,20 +60,20 @@ router.post("/product-search", async (req, res) => {
       }
     },
     (err, docs) => {
-      var productChunks = [];
+      var tourChunks = [];
       var chunkSize = docs.length;
       for (var i = 0; i < docs.length; i += chunkSize) {
-        productChunks.push(docs.slice(i, i + chunkSize));
+        tourChunks.push(docs.slice(i, i + chunkSize));
       }
       res.render("pages/index", {
-        products: productChunks
+        tours: tourChunks
       });
     }
   );
 });
 
-router.post("/product-filter", async (req, res) => {
-  Product.find(
+router.post("/tour-filter", async (req, res) => {
+  Tour.find(
     {
       title: {
         $regex: req.body.search,
@@ -83,13 +81,13 @@ router.post("/product-filter", async (req, res) => {
       }
     },
     (err, docs) => {
-      var productChunks = [];
+      var tourChunks = [];
       var chunkSize = docs.length;
       for (var i = 0; i < docs.length; i += chunkSize) {
-        productChunks.push(docs.slice(i, i + chunkSize));
+        tourChunks.push(docs.slice(i, i + chunkSize));
       }
       res.render("pages/index", {
-        products: productChunks
+        tours: tourChunks
       });
     }
   );

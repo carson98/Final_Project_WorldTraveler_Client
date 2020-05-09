@@ -9,16 +9,15 @@ var mongoose = require('mongoose');
 var session = require('express-session')
 var passport = require('passport');
 var flash = require('connect-flash');
-var flashexpress = require('flash-express');
 var validator = require('express-validator');
 var bodyParser = require('body-parser')
-var productRouter = require('./routes/product')
+var tourRouter = require('./routes/tour')
 var cartRouter = require('./routes/cart')
 var orderRouter = require('./routes/order')
 var indexRouter = require('./routes/index');
 var contactRouter = require('./routes/contact')
 var i18n = require('i18n')
-
+var helpers = require('handlebars-helpers')();
 const passportSetup = require('./config/passport-gmail')
 
 
@@ -56,7 +55,12 @@ app.use(session({
   saveUninitialized: false
 }))
 app.use(flash());
-app.use(flashexpress());
+app.use(function(req, res, next){
+  res.locals.sessionFlash = req.session.sessionFlash;
+  delete req.session.sessionFlash;
+  next();
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -97,7 +101,7 @@ app.get('/en', function (req, res) {
 });
 
 app.use('/user', userRouter)
-app.use('/product', productRouter)
+app.use('/tour', tourRouter)
 app.use('/cart', cartRouter)
 app.use('/order', orderRouter)
 app.use('/contact', contactRouter)

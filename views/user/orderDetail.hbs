@@ -15,36 +15,33 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Order Date:</label>
-                                        {{orderDetail._doc.orderDate}}
+                                        {{orderDetail.orderDate}}
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12 row">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating font-weight-bold">Product detail in order:</label>
+                                    <label class="bmd-label-floating font-weight-bold">
+                                        <h4>Detail of order</h4>
+                                    </label>
                                 </div>
                             </div>
-                            {{#each orderDetail._doc.orderList}}
+                            {{#each orderDetail.orderList}}
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Product Name: {{this._doc.proName}}</label>
+                                        <label class="bmd-label-floating">Tour Name: </label>{{this.proName}}
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Size: {{this._doc.Size}}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="bmd-label-floating">Quantity: {{this._doc.totalQuantity}}</label>
+                                        <label class="bmd-label-floating">Quantity: </label>{{this.totalQuantity}}
 
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Total price: ${{this._doc.totalPrice}}</label>
+                                        <label class="bmd-label-floating">Total price: </label>$ {{this.totalPrice}}
 
                                     </div>
                                 </div>
@@ -54,22 +51,20 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Customer Name:</label>
-                                        {{orderDetail._doc.userInfo.name}}
+                                        {{orderDetail.userInfo.name}}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Email:</label>
-
-                                        {{orderDetail._doc.userInfo.email}}
+                                        {{orderDetail.userInfo.email}}
 
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Phone Number:</label>
-
-                                        {{orderDetail._doc.userInfo.phoneNum}}
+                                        {{orderDetail.userInfo.phoneNum}}
 
                                     </div>
                                 </div>
@@ -79,8 +74,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Discount:
-                                            {{orderDetail._doc.couponCode.description}}</label>
-
+                                        </label>
+                                        {{orderDetail.couponCode.description}}
                                     </div>
                                 </div>
 
@@ -89,16 +84,16 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Adress Shipping:</label>
-                                        {{orderDetail._doc.userInfo.address}},{{orderDetail._doc.userInfo.district}},
-                                        {{orderDetail._doc.userInfo.city}},{{orderDetail._doc.userInfo.country}}
+                                        {{orderDetail.userInfo.address}},{{orderDetail.userInfo.district}},
+                                        {{orderDetail.userInfo.city}},{{orderDetail.userInfo.country}}
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating font-weight-bold">Status Shipping:</label>
-                                        {{orderDetail._doc.statusShip}}
+                                        <label class="bmd-label-floating font-weight-bold">Booking Status:</label>
+                                        {{orderDetail.statusShip}}
                                     </div>
                                 </div>
 
@@ -108,10 +103,8 @@
                                     <div class="form-group">
                                         <label class="bmd-label-floating font-weight-bold">Total Price: </label>
                                         <p class="class=bmd-label-floating font-weight-bold">
-                                            ${{orderDetail._doc.totalPrice}}
+                                            ${{orderDetail.totalPrice}}
                                         </p>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -119,10 +112,6 @@
                                 <div class="col-12">
                                     {{!-- data-toggle="modal" data-target="#modelId" --}}
                                     <form action="/user/deleteOrder" method="POST">
-                                        {{!-- <input type="text" class="form-control" name="numberOrder" id="numberOrder"
-                                            value="{{orderDetail.number}}" hidden="false"> --}}
-                                        {{!-- <input type="text" class="form-control" name="arrPro" id="arrPro"
-                                            value="{{#each arr_proId}}{{this}}-{{/each}}" hidden="false"> --}}
                                         <input type="text" class="form-control" name="arrPro" id="arrPro"
                                             value="{{arr_proDelet}}" hidden="false">
                                         <button type="submit" class="btn btn-danger pull-right">Delete</button>

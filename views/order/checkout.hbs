@@ -71,10 +71,8 @@
                                             <select name="country" id="country" class="form-control" required>
                                                 <option value="France">France</option>
                                                 <option value="Italy">Italy</option>
-                                                <option value="Philippines">Philippines</option>
-                                                <option value="South">South Korea</option>
                                                 <option value="United">United States</option>
-                                                <option value="Japan">Japan</option>
+                                                <option value="Japan">United Kingdom</option>
                                                 <option value="Viet-Nam">Viet Nam</option>
                                             </select>
                                         </div>
@@ -126,17 +124,16 @@
                             {{/infoUser}}
                             <div class="container">
                                 <div class="row mt-5 pt-3 d-flex">
-                                    {{#if products}}
+                                    {{#if tours}}
                                     <div class="col-md-6">
                                         <div class="cart-detail bg-light p-3 p-md-4">
                                             <h3 class="billing-heading mb-4">{{__ "Information cart"}}</h3>
                                             <div class="row" style="padding-bottom: 15px">
-                                                <div class="col-3" style="padding-left:25px">{{__ "Product"}}</div>
-                                                <div class="col-3">{{__ "Size"}}</div>
-                                                <div class="col-3">{{__ "Quantity"}}</div>
+                                                <div class="col-3" style="padding-left:25px; white-space: nowrap">{{__ "Tour Name"}}</div>
+                                                <div class="col-3" style="white-space: nowrap">{{__ "Tour Booked"}}</div>
                                                 <div class="col-3">{{__ "Total"}} ($)</div>
                                             </div>
-                                            {{#each products}}
+                                            {{#each tours}}
                                             <div class="form-group">
                                                 <div class="col-md-12">
                                                     <div class="row">
@@ -144,13 +141,10 @@
                                                             {{this.item.title}}
                                                         </div>
                                                         <div class="col-3">
-                                                            {{this.size}}
-                                                        </div>
-                                                        <div class="col-3">
                                                             {{this.qty}}
                                                         </div>
                                                         <div class="col-3">
-                                                            ${{this.price}}.00
+                                                            $ {{this.price}}.00
                                                         </div>
 
                                                     </div>
@@ -167,7 +161,7 @@
                                             <h3 class="billing-heading mb-4">{{__ "Cart Total"}}</h3>
                                             <p class="d-flex">
                                                 <span>{{__ "Subtotal"}}</span>
-                                                <span>${{total}}.00</span>
+                                                <span>$ {{total}}.00</span>
                                             </p>
                                             <p class="d-flex">
                                                 <span>{{__ "Discount"}}</span>
@@ -177,13 +171,13 @@
                                             <p class="d-flex total-price">
                                                 <span>{{__ "Total"}}</span>
                                                 {{#if totalDiscount}}
-                                                <span>${{totalDiscount}}</span>
+                                                <span>$ {{totalDiscount}}</span>
                                                 {{else}}
-                                                <span>${{total}}.00</span>
+                                                <span>$ {{total}}.00</span>
                                                 {{/if}}
                                             </p>
                                             <p><button type="submit"
-                                                    class="btn btn-primary py-3 px-4">{{__ "Place an order"}}</button>
+                                                    class="btn btn-primary py-3 px-4">{{__ "Payment Offline"}}</button>
                                             </p>
                                         </div>
                                     </div>
@@ -203,7 +197,7 @@
                         <div id="charge-error" class="alert alert-danger {{#if noError}}hidden{{/if}}">
                             {{errMsg}}
                         </div>
-                        <form id="checkout-form" action="/order/add-order" method="POST" class="billing-form">
+                        <form id="checkout-form" action="/order/online-order" method="POST" class="billing-form">
                             <h3 class="mb-4 billing-heading">{{__ "Billing Details"}}</h3>
                             {{#infoUser}}
                             <div class="row align-items-end">
@@ -262,25 +256,21 @@
                             {{/infoUser}}
                             <div class="container">
                             <div class="row mt-5 pt-3 d-flex">
-                                {{#if products}}
+                                {{#if tours}}
                                 <div class="col-md-6">
                                     <div class="cart-detail bg-light p-3 p-md-4">
-                                        <h3 class="billing-heading mb-4">{{__ "Information cart"}}</h3>
+                                        <h3 class="billing-heading mb-4">{{__ "Cart Information"}}</h3>
                                         <div class="row" style="padding-bottom: 15px">
-                                            <div class="col-3" style="padding-left:25px">{{__ "Product"}}</div>
-                                            <div class="col-3">{{__ "Size"}}</div>
-                                            <div class="col-3">{{__ "Quantity"}}</div>
+                                            <div class="col-3" style="padding-left:25px; white-space: nowrap">{{__ "Tour Name"}}</div>
+                                            <div class="col-3" style="white-space: nowrap">{{__ "Tour Booked"}}</div>
                                             <div class="col-3">{{__ "Total"}} ($)</div>
                                         </div>
-                                        {{#each products}}
+                                        {{#each tours}}
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="col-3">
                                                         {{this.item.title}}
-                                                    </div>
-                                                    <div class="col-3">
-                                                        {{this.size}}
                                                     </div>
                                                     <div class="col-3">
                                                         {{this.qty}}
