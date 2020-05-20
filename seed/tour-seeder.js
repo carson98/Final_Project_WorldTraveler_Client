@@ -1,51 +1,74 @@
 var Tour = require("../models/tour");
 var mongoose = require("mongoose");
 const mongo = mongoose.connect("mongodb://localhost:27017/shopping", {
-  useNewUrlParser: true
+  useNewUrlParser: true,
 });
 mongo
   .then(() => {
     console.log("connected");
   })
-  .catch(err => {
+  .catch((err) => {
     console.log("err", err);
   });
 var tours = [
   new Tour({
-    imagePath: "NhaTrang-DaLat.jpg",
-    title: "Hà Nội",
+    imagePath: "da-lat.jpg",
+    title: "Đà Lạt",
     category: true,
     price: 1000,
     depart: {
       id: "",
-      name: "Huế"
+      name: "TP HCM",
     },
     destination: {
       id: "",
-      name: "Hà Nội"
+      name: "Đà Lạt",
     },
     duration: 4,
     seat: 5,
     tourGuide: "Du",
     hotel: 5,
-    description: "exelenfjn",
+    description: "Good",
     reviews: [],
     orderList: [],
     tourRate: 0,
-    totalProfit: 0
+    totalProfit: 0,
   }),
   new Tour({
-    imagePath: "Hue-Hoi-An.jpg",
-    title: "Huế",
+    imagePath: "NhaTrang-DaLat.jpg",
+    title: "Nha Trang",
     category: true,
     price: 1000,
     depart: {
       id: "",
-      name: "Hà Nội"
+      name: "Đà Lạt",
     },
     destination: {
       id: "",
-      name: "Huế"
+      name: "Nha Trang",
+    },
+    duration: 4,
+    seat: 5,
+    tourGuide: "Nam",
+    hotel: 6,
+    description: "exellent",
+    reviews: [],
+    orderList: [],
+    tourRate: 0,
+    totalProfit: 0,
+  }),
+  new Tour({
+    imagePath: "Hue-Hoi-An.jpg",
+    title: "TP HCM",
+    category: true,
+    price: 1000,
+    depart: {
+      id: "",
+      name: "Nha Trang",
+    },
+    destination: {
+      id: "",
+      name: "TP HCM",
     },
     duration: 4,
     seat: 5,
@@ -55,20 +78,21 @@ var tours = [
     reviews: [],
     orderList: [],
     tourRate: 0,
-    totalProfit: 0
+    totalProfit: 0,
   }),
+
   new Tour({
-    imagePath: "NhaTrang-DaLat.jpg",
+    imagePath: "new-york.jpg",
     title: "New York",
     category: false,
-    price: 3000,
+    price: 5000,
     depart: {
       id: "",
-      name: "Australia"
+      name: "TP HCM",
     },
     destination: {
       id: "",
-      name: "New York"
+      name: "New York",
     },
     duration: 7,
     seat: 8,
@@ -78,8 +102,9 @@ var tours = [
     reviews: [],
     orderList: [],
     tourRate: 0,
-    totalProfit: 0
+    totalProfit: 0,
   }),
+
   new Tour({
     imagePath: "Sydney-Opera-House.jpg",
     title: "Australia",
@@ -87,11 +112,11 @@ var tours = [
     price: 3000,
     depart: {
       id: "",
-      name: "Hà Nội"
+      name: "TP HCM",
     },
     destination: {
       id: "",
-      name: "Australia"
+      name: "Australia",
     },
     duration: 7,
     seat: 8,
@@ -101,12 +126,36 @@ var tours = [
     reviews: [],
     orderList: [],
     tourRate: 0,
-    totalProfit: 0
+    totalProfit: 0,
+  }),
+
+  new Tour({
+    imagePath: "France.jpg",
+    title: "France",
+    category: false,
+    price: 3000,
+    depart: {
+      id: "",
+      name: "TP HCM",
+    },
+    destination: {
+      id: "",
+      name: "France",
+    },
+    duration: 7,
+    seat: 8,
+    tourGuide: "Du",
+    hotel: 6,
+    description: "nice",
+    reviews: [],
+    orderList: [],
+    tourRate: 0,
+    totalProfit: 0,
   })
 ];
 var done = 0;
 for (var i = 0; i < tours.length; i++) {
-  tours[i].save(function(err, result) {
+  tours[i].save(function (err, result) {
     done++;
     if (done == tours.length) {
       exit();
