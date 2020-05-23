@@ -50,6 +50,30 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="flex-c-m h-full p-2 bor6">
+                        <ul class="main-menu">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false"><i class="fa fa-eye fa-2x"
+                                        aria-hidden="true"></i></a>
+                                <div class="dropdown-menu viewed" aria-labelledby="dropdownId">
+                                    {{#each session.TourSession}}
+                                    <a class="dropdown-item" href="/tour/detail/{{this.id}}">
+                                        <div class="row item">
+                                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                                <img src="../../images/{{this.img}}"
+                                                    style="width: auto; height: 2em;" />
+                                            </div>
+                                            <div class="col-md-8 col-sm-8 col-xs-8 ml-10">
+                                                <p>{{this.name}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    {{/each}}
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="flex-c-m h-full p-r-25 bor6">
                         {{#if session.cart.totalQty}}
                         <a href="/cart/shopping-cart/"
@@ -79,7 +103,7 @@
     <div class="wrap-header-mobile">
         <!-- Logo moblie -->
         <div class="logo-mobile">
-            <a href="index.html"><img src="images/icons/WorldTravelerLogo.jpg" alt="IMG-LOGO"></a>
+            <a href="index.html"><img src="images/icons/WorldTravelerLogo.png" alt="IMG-LOGO"></a>
         </div>
 
         <!-- Icon header -->
@@ -517,7 +541,7 @@
                         </h4>
                         <div class="block2-txt-child1 flex-col-l">
                             <a href="/tour/detail/{{this._doc._id}}"
-                                class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" id="addwish">
                                 <h5><i class="zmdi zmdi-flight-land"></i> {{this._doc.title}}</h5>
                             </a>
                         </div>
@@ -534,11 +558,13 @@
                         <div class="content">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                    <p class="p-1" style="white-space:nowrap"><i class="zmdi zmdi-flight-takeoff"></i> Depart:
+                                    <p class="p-1" style="white-space:nowrap"><i class="zmdi zmdi-flight-takeoff"></i>
+                                        Depart:
                                         <strong>{{this._doc.depart.name}}</strong>
                                     </p>
                                     <p class="p-1"><i class="zmdi zmdi-calendar"></i> Date:
-                                        <strong id="dateFormat">{{moment this._doc.date format="YYYY-MM-DD"}}</strong></p>
+                                        <strong id="dateFormat">{{moment this._doc.date format="YYYY-MM-DD"}}</strong>
+                                    </p>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <p class="p-1"><i class="zmdi zmdi-airline-seat-recline-extra"></i> Seat

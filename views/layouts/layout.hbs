@@ -118,9 +118,11 @@
     });
 
     $('.js-addwish-b2').each(function () {
-      var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+      var nameProduct = $(this).parent().parent().find('#addwish').html()
       $(this).on('click', function () {
-        swal(nameProduct, "is added to wishlist !", "success");
+        var startIndex = nameProduct.lastIndexOf('</i>')
+        var endIndex = nameProduct.indexOf('</h5>')
+        swal(nameProduct.substring(startIndex + 5, endIndex), "is added to wishlist !", "success");
 
         $(this).addClass('js-addedwish-b2');
         $(this).off('click');

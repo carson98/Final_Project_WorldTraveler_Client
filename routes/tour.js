@@ -106,6 +106,8 @@ router.post("/tour-search", async (req, res) => {
 router.post("/filterPrice", (req, res) => {});
 
 router.get("/detail/:id", (req, res, next) => {
+  // localStorage.setItem('Tour',[])
+ 
   var tourId = req.params.id;
   var userAcc = req.session.user;
   var checkReview = null;
@@ -170,7 +172,6 @@ router.get("/detail/:id", (req, res, next) => {
       allowedSchemesAppliedToAttributes: ["href", "src", "cite"],
       allowProtocolRelative: true
     });
-    console.log(clean);
 
     if (err) {
       return res.redirect("/");
@@ -197,6 +198,23 @@ router.get("/detail/:id", (req, res, next) => {
         }
         if(req.session.checkSeats < pro.seat){
           req.session.notice = null
+        }
+
+        // ViewedTour
+        var ViewedTour = {
+          "id": pro.id,
+          "img" : pro.imagePath,
+          "name": pro.title
+        }
+        if(req.session.TourSession !== undefined){
+          let data = req.session.TourSession
+          data.find(item => item.id === pro.id) === undefined && data.unshift(ViewedTour)
+          data.length > 5 && data.pop();
+          req.session.TourSession = data
+        } else{
+          let data = [];
+          data.unshift(ViewedTour)
+          req.session.TourSession = data;
         }
         await res.render("tour/detail", {
           proDetail: pro,

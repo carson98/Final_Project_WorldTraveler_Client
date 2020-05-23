@@ -1,6 +1,6 @@
 var Tour = require("../models/tour");
 var mongoose = require("mongoose");
-const mongo = mongoose.connect("mongodb://localhost:27017/shopping", {
+const mongo = mongoose.connect("mongodb://localhost:27017/WorldTraveler", {
   useNewUrlParser: true,
 });
 mongo

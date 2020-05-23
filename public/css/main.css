@@ -181,6 +181,17 @@
   height: 124px;
 }
 
+.viewed {
+  right: initial !important;
+  left: 0 !important;
+  min-width: 310px !important;
+  padding: 10px 15px 0 15px !important;
+}
+.viewed a {
+  border-bottom: 1px dashed #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
 /*==================================================================
 [ Top bar ]*/
 .top-bar {

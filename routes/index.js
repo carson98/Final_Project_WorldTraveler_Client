@@ -7,6 +7,7 @@ var check_fields = require("../config/checkAuthenticate");
 
 router.get("/", async function(req, res, next) {
   // top 6 tour rating star
+  // var s = await viewTour.View_LocalStorage()
   Tour.find()
     .sort({
       totalProfit: -1

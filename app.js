@@ -23,7 +23,7 @@ const passportSetup = require('./config/passport-gmail')
 
 var app = express();
 
-mongoose.connect('mongodb://localhost:27017/shopping', {
+mongoose.connect('mongodb://localhost:27017/WorldTraveler', {
   useNewUrlParser: true
 });
 require('./config/passport')

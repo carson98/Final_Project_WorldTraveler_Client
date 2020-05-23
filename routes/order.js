@@ -97,8 +97,7 @@ router.post("/online-order", async function(req, res, next) {
     await Tour.findById(cartArr[i].item._id, async function(err, docs) {
       NumberOrder = (await docs.orderList.length) + 1; // create stt for orderList in tour
       numberSeats = Number(docs.seat) - Number(cartArr[i].totalNumber);
-      console.log(cartArr[i].totalNumber);
-      console.log(docs.seat);
+
       // process price after discount
       if (cart.coupons.description == 0) {
         abc = docs.totalProfit + cartArr[i].price;
